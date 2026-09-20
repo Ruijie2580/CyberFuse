@@ -1,0 +1,55 @@
+# ========== 数据集 ==========
+dataset:
+  name: "CyberFuse-cave"
+  dataname: "cave"
+  train_path: "../Dataset/cave/train.h5"
+  val_path: "../Dataset/cave/valid.h5"
+  test_path: "../Dataset/cave/test.h5"
+  scaling_factor: 4
+  hsi_channels: 31
+  msi_channels: 3
+
+# ========== 模型 ==========
+model:
+  scale: 4
+  ntier: 2
+  n_sub_iters: 3
+
+# ========== 训练 ==========
+training:
+  epochs: 300
+  batch_size: 16
+  seed: 42
+
+# ========== 优化器 ==========
+optimizer:
+  name: "AdamW"
+  lr: 0.0002
+  params:
+    weight_decay: 0.00001
+    betas: [ 0.9, 0.999 ]
+
+# ========== 调度器 ==========
+scheduler:
+  name: "MultiStepLR"
+  params:
+    milestones: [ 200, 250 ]
+    gamma: 0.5
+
+# ========== EMA ==========
+ema:
+  enabled: false
+  decay: 0.995
+  start_epoch: 15
+
+# ========== 日志 ==========
+logging:
+  use_swanlab: true
+  save_dir: "./checkpoints"
+  key_metric: "SAM"
+  metrics_mode: "min"
+
+# ========== 推理 ==========
+inference:
+  patch_size: 512
+  shave: 0

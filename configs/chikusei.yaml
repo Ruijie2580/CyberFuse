@@ -1,0 +1,71 @@
+# ========== 数据集 ==========
+dataset:
+  name: "CyberFuse-chikusei"
+  dataname: "chikusei"
+  train_path: "../Dataset/chikusei/train.h5"
+  val_path: "../Dataset/chikusei/valid.h5"
+  test_path: "../Dataset/chikusei/test.h5"
+  scaling_factor: 4
+  hsi_channels: 128
+  msi_channels: 8
+  # true: 全量载入内存并关闭句柄（最快，内存=数据集大小）
+  # false: 惰性按需读取（内存友好，且可安全配合 num_workers>0）
+  in_memory: true
+
+# ========== 模型 ==========
+model:
+  scale: 4
+  ntier: 2
+  n_sub_iters: 3
+  # PID 积分项泄漏系数：1.0 = 普通累加（与原实现一致）；<1.0 起抗积分饱和作用
+  pid_leaky: 1.0
+  # true 时返回各 tier 中间输出（显存开销更大），仅深监督/中间可视化时需要
+  return_intermediate: false
+  # true 时 eval 阶段缓存每步更新量用于可视化（大图会吃掉大量内存）
+  collect_vis: false
+
+# ========== 训练 ==========
+training:
+  epochs: 300
+  batch_size: 16
+  seed: 42
+  # 注意：in_memory=true 时不要开多 worker（Windows 下每进程各持一份数据副本）
+  num_workers: 0
+  pin_memory: true
+
+# ========== 优化器 ==========
+optimizer:
+  name: "AdamW"
+  lr: 0.0002
+  params:
+    weight_decay: 0.00001
+    betas: [ 0.9, 0.999 ]
+
+# ========== 调度器 ==========
+scheduler:
+  name: "MultiStepLR"
+  params:
+    milestones: [ 200, 250 ]
+    gamma: 0.5
+
+# ========== EMA ==========
+ema:
+  enabled: false
+  decay: 0.995
+  start_epoch: 15
+
+# ========== 日志 ==========
+logging:
+  use_swanlab: true
+  project: "CyberFuse"
+  save_dir: "./checkpoints"
+  key_metric: "SAM"
+  metrics_mode: "min"
+
+# ========== 推理 ==========
+inference:
+  patch_size: 256
+  # 分块推理的边缘裁切像素数，0 表示不裁（大图会出现接缝伪影），建议 16
+  shave: 16
+  num_workers: 0
+  pin_memory: true

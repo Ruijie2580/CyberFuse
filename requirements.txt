@@ -1,0 +1,10 @@
+# 已在 Python 3.10 / torch 2.11.0+cu128 / CUDA 12.8 下验证通过。
+# 需要完全复现时，把 >= 换成 ==（torch 去掉 +cu128 本地版本后缀）。
+torch>=2.0
+numpy>=1.24
+scipy>=1.10
+h5py>=3.8
+scikit-image>=0.21
+tqdm>=4.65
+PyYAML>=6.0
+swanlab>=0.5

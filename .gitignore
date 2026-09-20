@@ -1,0 +1,25 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.ipynb_checkpoints/
+
+# ---- 训练产物 ----
+checkpoints/
+output/
+swanlog/
+*.pth
+*.mat
+
+# ---- 本地数据导出（LoadData.export_data / export_in_one_mat 的输出）----
+*_data/
+/GT/
+/MSI/
+/LRHSI/
+
+# ---- IDE / 编辑器 ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
