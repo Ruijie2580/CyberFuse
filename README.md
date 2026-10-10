@@ -1,4 +1,4 @@
-# CyberFuse: A Deep Unfolding Network With Dynamic PID Control and Large-Kernel Attention for Hyperspectral Image Sharpening
+# CyberFuse: Deep Unfolding Network with Dynamic Proportional–Integral–Derivative Control and Large-kernel Attention for Hyperspectral and Multispectral Image Fusion
 
 ## Requirements
 
